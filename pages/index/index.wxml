@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="title">欢迎登录</view>
+
+  <view class="input-wrap">
+    <text class="label">用户名:</text>
+    <input 
+      class="info-input" 
+      placeholder="请输入用户名" 
+      bindinput="handleUsernameInput" 
+      value="{{username}}"
+    />
+  </view>
+
+  <view class="input-wrap">
+    <text class="label">密  码:</text>
+    <input 
+      class="info-input" 
+      placeholder="请输入密码" 
+      password="true"
+      bindinput="handlePasswordInput" 
+      value="{{password}}"
+    />
+  </view>
+
+  <button class="action-button" bindtap="login">登 录</button>
+
+</view>

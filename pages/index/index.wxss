@@ -1,0 +1,41 @@
+/* pages/index/index.wxss */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100rpx 40rpx;
+    box-sizing: border-box;
+  }
+  
+  .title {
+    font-size: 48rpx;
+    font-weight: bold;
+    margin-bottom: 80rpx;
+  }
+  
+  .input-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 40rpx;
+    border-bottom: 1rpx solid #eee;
+    padding-bottom: 10rpx;
+  }
+  
+  .label {
+    width: 150rpx;
+    font-size: 32rpx;
+  }
+  
+  .info-input {
+    flex: 1;
+    font-size: 32rpx;
+  }
+  
+  .action-button {
+    width: 100%;
+    margin-top: 80rpx;
+    background-color: #6E0382; /* 紫色 */
+    color: white;
+    border-radius: 12rpx;
+  }
