@@ -1,0 +1,283 @@
+/* pages/wellness/wellness.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 30rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 体质卡片 */
+.constitution-card {
+  background: linear-gradient(135deg, #6E0382 0%, #8E44AD 100%);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 25rpx rgba(110, 3, 130, 0.15);
+}
+
+.card-header {
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  color: white;
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.card-content {
+  color: white;
+}
+
+.constitution-type {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.constitution-desc {
+  font-size: 26rpx;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* 快捷问题 */
+.quick-questions {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.question-scroll {
+  white-space: nowrap;
+  padding: 10rpx 0;
+}
+
+.question-list {
+  display: flex;
+  gap: 20rpx;
+}
+
+.question-item {
+  flex-shrink: 0;
+  background-color: white;
+  border: 2rpx solid #e9ecef;
+  border-radius: 30rpx;
+  padding: 20rpx 30rpx;
+  font-size: 26rpx;
+  color: #333;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.question-item:active {
+  transform: scale(0.95);
+  background-color: #f8f4ff;
+  border-color: #6E0382;
+}
+
+/* 对话容器 */
+.chat-container {
+  background-color: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  min-height: 400rpx;
+}
+
+/* AI回复区域 */
+.reply-section {
+  margin-bottom: 30rpx;
+}
+
+.reply-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.ai-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-right: 20rpx;
+  background-color: #6E0382;
+}
+
+.reply-label {
+  font-size: 28rpx;
+  color: #6E0382;
+  font-weight: bold;
+}
+
+.reply-content {
+  background-color: #f8f4ff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  border-left: 6rpx solid #6E0382;
+}
+
+.reply-text {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+/* 输入区域 */
+.input-container {
+  border-top: 1rpx solid #f0f0f0;
+  padding-top: 30rpx;
+}
+
+.input-wrapper {
+  background-color: #f8f9fa;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e9ecef;
+}
+
+.input-wrapper:focus-within {
+  border-color: #6E0382;
+  background-color: white;
+}
+
+.chat-input {
+  width: 100%;
+  min-height: 80rpx;
+  max-height: 200rpx;
+  font-size: 30rpx;
+  line-height: 1.6;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.input-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20rpx;
+}
+
+.send-btn {
+  background: linear-gradient(135deg, #6E0382 0%, #8E44AD 100%);
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 15rpx 40rpx;
+  font-size: 28rpx;
+  box-shadow: 0 4rpx 15rpx rgba(110, 3, 130, 0.3);
+}
+
+.send-btn:disabled {
+  background: #ccc;
+  box-shadow: none;
+}
+
+/* 功能按钮 */
+.function-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.function-btn {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2rpx solid #e9ecef;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.function-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.upload-btn {
+  border-color: #28a745;
+}
+
+.upload-btn:active {
+  background-color: #f8fff9;
+}
+
+.clear-btn {
+  border-color: #dc3545;
+}
+
+.clear-btn:active {
+  background-color: #fff8f8;
+}
+
+.btn-icon {
+  font-size: 40rpx;
+  margin-right: 25rpx;
+}
+
+.btn-text {
+  flex: 1;
+}
+
+.btn-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.btn-subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 提示区域 */
+.tip-section {
+  text-align: center;
+  padding: 60rpx 40rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.tip-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.tip-text {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+  line-height: 1.6;
+}
+
+.tip-btn {
+  background: linear-gradient(135deg, #6E0382 0%, #8E44AD 100%);
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 20rpx 50rpx;
+  font-size: 30rpx;
+}
+
+/* 响应式适配 */
+@media screen and (max-width: 750rpx) {
+  .container {
+    padding: 20rpx;
+  }
+  
+  .constitution-card,
+  .chat-container {
+    padding: 25rpx;
+  }
+}

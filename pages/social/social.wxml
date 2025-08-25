@@ -1,0 +1,149 @@
+<!--pages/social/social.wxml-->
+<view class="social-container">
+  
+  <!-- 顶部筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{currentFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="switchFilter">
+      全部
+    </view>
+    <view class="filter-item {{currentFilter === 'meal' ? 'active' : ''}}" data-filter="meal" bindtap="switchFilter">
+      美食
+    </view>
+    <view class="filter-item {{currentFilter === 'experience' ? 'active' : ''}}" data-filter="experience" bindtap="switchFilter">
+      心得
+    </view>
+    <view class="filter-item {{currentFilter === 'tips' ? 'active' : ''}}" data-filter="tips" bindtap="switchFilter">
+      技巧
+    </view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="showShareDialog">
+    <text class="iconfont">✏️</text>
+    <text>分享</text>
+  </view>
+
+  <!-- 动态列表 -->
+  <scroll-view class="posts-container" scroll-y="true" bindscrolltolower="onReachBottom">
+    <!-- 加载状态 -->
+    <view wx:if="{{loading && posts.length === 0}}" class="loading-container">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{!loading && posts.length === 0}}" class="empty-container">
+      <text class="empty-icon">🌱</text>
+      <text class="empty-text">还没有动态哦</text>
+      <text class="empty-desc">快来分享你的养生心得吧</text>
+    </view>
+
+    <!-- 动态列表 -->
+    <view wx:for="{{posts}}" wx:key="postId" class="post-item">
+      <!-- 用户信息 -->
+      <view class="post-header">
+        <view class="user-info" data-user-id="{{item.author.userId}}" bindtap="viewUserProfile">
+          <view class="avatar">{{item.author.name.charAt(0)}}</view>
+          <view class="user-details">
+            <text class="username">{{item.author.name}}</text>
+            <text class="constitution">{{item.author.constitution}}</text>
+          </view>
+        </view>
+        <text class="post-time">{{item.createdAt}}</text>
+      </view>
+
+      <!-- 动态内容 -->
+      <view class="post-content">
+        <text class="content-text">{{item.content}}</text>
+        
+        <!-- 关联的餐饮记录 -->
+        <view wx:if="{{item.mealRecord}}" class="meal-record">
+          <view class="meal-info">
+            <text class="meal-label">🍽️ 分享餐食：</text>
+            <text class="meal-text">{{item.mealRecord.mealText}}</text>
+            <text class="meal-emotion">心情：{{item.mealRecord.emotion}}</text>
+          </view>
+        </view>
+
+        <!-- 图片展示 -->
+        <view wx:if="{{item.images.length > 0}}" class="post-images">
+          <image wx:for="{{item.images}}" wx:for-item="img" wx:key="index" 
+                 src="{{img}}" class="post-image" mode="aspectFill" lazy-load="true"/>
+        </view>
+
+        <!-- 标签 -->
+        <view wx:if="{{item.tags.length > 0}}" class="post-tags">
+          <text wx:for="{{item.tags}}" wx:key="index" class="tag">#{{item}}</text>
+        </view>
+      </view>
+
+      <!-- 互动栏 -->
+      <view class="post-actions">
+        <view class="action-item" data-post-id="{{item.postId}}" data-is-liked="{{item.isLiked}}" bindtap="likePost">
+          <text class="action-icon {{item.isLiked ? 'liked' : ''}}">❤️</text>
+          <text class="action-text">{{item.likes}}</text>
+        </view>
+        <view class="action-item">
+          <text class="action-icon">💬</text>
+          <text class="action-text">{{item.comments}}</text>
+        </view>
+        <view class="action-item" data-content="{{item.content}}" bindtap="shareToWeChat">
+          <text class="action-icon">📤</text>
+          <text class="action-text">分享</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{loading && posts.length > 0}}" class="loading-more">
+      <text>加载更多...</text>
+    </view>
+
+    <!-- 没有更多 -->
+    <view wx:if="{{!hasMore && posts.length > 0}}" class="no-more">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+
+  <!-- 分享弹窗 -->
+  <view wx:if="{{showShareDialog}}" class="share-modal">
+    <view class="modal-mask" bindtap="closeShareDialog"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">分享养生动态</text>
+        <text class="modal-close" bindtap="closeShareDialog">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <!-- 内容输入 -->
+        <textarea 
+          class="share-input"
+          placeholder="分享你的养生心得、健康餐食或小技巧..."
+          value="{{shareContent}}"
+          bindinput="onShareContentInput"
+          maxlength="300"
+          auto-height="true">
+        </textarea>
+
+        <!-- 图片选择 -->
+        <view class="image-section">
+          <text class="section-title">添加图片</text>
+          <view class="image-list">
+            <view wx:for="{{shareImages}}" wx:key="index" class="image-item">
+              <image src="{{item}}" class="share-image"/>
+              <view class="image-delete" data-index="{{index}}" bindtap="removeShareImage">×</view>
+            </view>
+            <view wx:if="{{shareImages.length < 3}}" class="add-image" bindtap="chooseShareImages">
+              <text class="add-icon">+</text>
+              <text class="add-text">添加图片</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="cancel-btn" bindtap="closeShareDialog">取消</button>
+        <button class="publish-btn-modal" bindtap="publishShare">发布</button>
+      </view>
+    </view>
+  </view>
+</view>

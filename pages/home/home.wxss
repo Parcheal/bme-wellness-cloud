@@ -1,0 +1,405 @@
+/* pages/home/home.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 30rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 头部 */
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.welcome {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.date {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 一周容器 */
+.week-container {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.week-header {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.week-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.week-subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 一周网格 */
+.week-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day-column {
+  flex: 1;
+  text-align: center;
+  margin: 0 5rpx;
+}
+
+.day-header {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.day-date {
+  font-size: 20rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+}
+
+/* 餐次列表 */
+.meal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.meal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  background-color: #f0f0f0;
+  border: 2rpx solid #ddd;
+  margin: 0 auto;
+  justify-content: center;
+  font-size: 20rpx;
+  transition: all 0.2s ease;
+}
+
+.meal-item.completed {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.meal-item.unhealthy {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.meal-name {
+  font-size: 18rpx;
+  margin-bottom: 2rpx;
+}
+
+.meal-status {
+  font-size: 16rpx;
+}
+
+/* 今日汇总 */
+.today-summary {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.summary-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.summary-content {
+  display: flex;
+  justify-content: space-around;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.summary-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #6E0382;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600rpx;
+  background-color: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.food-input {
+  width: 100%;
+  min-height: 120rpx;
+  background-color: #f8f9fa;
+  border: 2rpx solid #e9ecef;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.mood-slider {
+  margin: 20rpx 0;
+}
+
+.mood-desc {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  color: #666;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #eee;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  height: 88rpx;
+  font-size: 30rpx;
+  border: none;
+  border-radius: 0;
+}
+
+.cancel-btn {
+  background-color: #f8f9fa;
+  color: #666;
+}
+
+.confirm-btn {
+  background-color: #6E0382;
+  color: white;
+}
+
+/* 状态区域 */
+.status-section {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  border: 2rpx solid #28a745;
+}
+
+.status-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding: 10rpx 0;
+}
+
+.status-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.status-value {
+  font-size: 28rpx;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status-buttons {
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.status-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  padding: 15rpx 40rpx;
+  font-size: 26rpx;
+}
+
+.status-btn:active {
+  background-color: #1e7e34;
+}
+
+/* 测试区域 */
+.test-section {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  border: 2rpx dashed #e9ecef;
+}
+
+.test-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #495057;
+  margin-bottom: 20rpx;
+}
+
+.test-buttons {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+  margin-bottom: 15rpx;
+}
+
+.test-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  padding: 15rpx 30rpx;
+  font-size: 24rpx;
+  flex: 1;
+  max-width: 200rpx;
+}
+
+.test-btn.secondary {
+  background-color: #6c757d;
+}
+
+.test-btn:active {
+  background-color: #0056b3;
+}
+
+.test-btn.secondary:active {
+  background-color: #5a6268;
+}
+
+.test-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+/* 提示 */
+.tip {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.tip-text {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.tip-btn {
+  background-color: #6E0382;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  padding: 15rpx 40rpx;
+  font-size: 26rpx;
+}

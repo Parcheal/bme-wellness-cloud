@@ -1,0 +1,174 @@
+/* pages/personal/personal.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 30rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 用户信息卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, #6E0382 0%, #8E44AD 100%);
+  border-radius: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx;
+}
+
+.avatar-text {
+  color: white;
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.user-detail {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.constitution {
+  display: block;
+  font-size: 24rpx;
+  color: #6E0382;
+  background-color: #f8f4ff;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+/* 统计数据 */
+.stats-section {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #6E0382;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 功能菜单 */
+.menu-section {
+  background-color: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background-color: #f8f9fa;
+}
+
+.menu-item.logout {
+  color: #dc3545;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 30rpx;
+  width: 60rpx;
+  text-align: center;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.menu-item.logout .menu-text {
+  color: #dc3545;
+}
+
+.menu-arrow {
+  font-size: 30rpx;
+  color: #999;
+}
+
+/* 体质详情 */
+.constitution-detail {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.detail-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.detail-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}

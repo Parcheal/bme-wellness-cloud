@@ -1,0 +1,162 @@
+<!-- pages/home/home.wxml -->
+<view class="container">
+  <!-- 头部信息 -->
+  <view class="header">
+    <text class="welcome">今日养生打卡</text>
+    <text class="date">{{currentWeek[0].date}} 至 {{currentWeek[6].date}}</text>
+  </view>
+
+  <!-- 一周21顿展示 -->
+  <view class="week-container">
+    <view class="week-header">
+      <text class="week-title">本周饮食记录</text>
+      <text class="week-subtitle">点击餐次进行打卡</text>
+    </view>
+    
+    <view class="week-grid">
+      <view class="day-column" wx:for="{{currentWeek}}" wx:key="date">
+        <view class="day-header">{{item.dayName}}</view>
+        <view class="day-date">{{item.date.split('-')[2]}}</view>
+        
+        <!-- 三餐 -->
+        <view class="meal-list">
+          <view 
+            class="meal-item {{item.meals.breakfast.completed ? 'completed' : ''}} {{!item.meals.breakfast.healthy ? 'unhealthy' : ''}}"
+            data-date="{{item.date}}"
+            data-meal="breakfast"
+            bindtap="onMealTap"
+          >
+            <text class="meal-name">早</text>
+            <view class="meal-status">
+              <text wx:if="{{item.meals.breakfast.completed}}">✓</text>
+              <text wx:else>○</text>
+            </view>
+          </view>
+          
+          <view 
+            class="meal-item {{item.meals.lunch.completed ? 'completed' : ''}} {{!item.meals.lunch.healthy ? 'unhealthy' : ''}}"
+            data-date="{{item.date}}"
+            data-meal="lunch"
+            bindtap="onMealTap"
+          >
+            <text class="meal-name">午</text>
+            <view class="meal-status">
+              <text wx:if="{{item.meals.lunch.completed}}">✓</text>
+              <text wx:else>○</text>
+            </view>
+          </view>
+          
+          <view 
+            class="meal-item {{item.meals.dinner.completed ? 'completed' : ''}} {{!item.meals.dinner.healthy ? 'unhealthy' : ''}}"
+            data-date="{{item.date}}"
+            data-meal="dinner"
+            bindtap="onMealTap"
+          >
+            <text class="meal-name">晚</text>
+            <view class="meal-status">
+              <text wx:if="{{item.meals.dinner.completed}}">✓</text>
+              <text wx:else>○</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日汇总 -->
+  <view class="today-summary">
+    <view class="summary-title">今日汇总</view>
+    <view class="summary-content">
+      <view class="summary-item">
+        <text class="summary-label">已打卡：</text>
+        <text class="summary-value">
+          {{(todayMeals.breakfast.completed ? 1 : 0) + (todayMeals.lunch.completed ? 1 : 0) + (todayMeals.dinner.completed ? 1 : 0)}}/3 餐
+        </text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">健康度：</text>
+        <text class="summary-value">
+          {{((todayMeals.breakfast.healthy ? 1 : 0) + (todayMeals.lunch.healthy ? 1 : 0) + (todayMeals.dinner.healthy ? 1 : 0)) * 100 / 3}}%
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 打卡弹窗 -->
+  <view class="modal" wx:if="{{showCheckIn}}" catchtouchmove="true">
+    <view class="modal-mask" bindtap="closeCheckIn"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">{{selectedMeal === 'breakfast' ? '早餐' : selectedMeal === 'lunch' ? '午餐' : '晚餐'}}打卡</text>
+        <view class="modal-close" bindtap="closeCheckIn">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="form-group">
+          <text class="label">今天吃了什么？</text>
+          <textarea
+            class="food-input"
+            placeholder="请输入食物，如：小米粥，蒸蛋，青菜..."
+            value="{{foodInput}}"
+            bindinput="onFoodInput"
+            maxlength="200"
+          />
+        </view>
+        
+        <view class="form-group">
+          <text class="label">心情如何？{{currentMood}}/5</text>
+          <slider
+            class="mood-slider"
+            min="1"
+            max="5"
+            value="{{currentMood}}"
+            bindchange="onMoodChange"
+            activeColor="#6E0382"
+            show-value
+          />
+          <view class="mood-desc">
+            <text>很不好</text>
+            <text>很开心</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="cancel-btn" bindtap="closeCheckIn">取消</button>
+        <button class="confirm-btn" bindtap="saveCheckIn">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户状态显示 -->
+  <view class="status-section">
+    <view class="status-title">📱 当前状态</view>
+    <view class="status-item">
+      <text class="status-label">登录状态：</text>
+      <text class="status-value">{{userInfo ? '已登录' : '未登录'}}</text>
+    </view>
+    <view class="status-item" wx:if="{{userInfo}}">
+      <text class="status-label">用户档案：</text>
+      <text class="status-value">{{userProfile ? '已完善' : '未完善'}}</text>
+    </view>
+    <view class="status-buttons" wx:if="{{!userInfo}}">
+      <button class="status-btn" bindtap="quickLogin">快速登录测试</button>
+    </view>
+  </view>
+
+  <!-- 云函数测试区域 -->
+  <view class="test-section">
+    <view class="test-title">🔧 云函数测试</view>
+    <view class="test-buttons">
+      <button class="test-btn" bindtap="testSaveMealRecordDirectly">测试 saveMealRecord</button>
+      <button class="test-btn secondary" bindtap="testGetMealRecords">测试 getMealRecords</button>
+    </view>
+    <text class="test-desc">点击测试餐饮记录的保存和查询功能</text>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tip" wx:if="{{!userProfile}}">
+    <text class="tip-text">提示：完善个人信息可获得更精准的健康建议</text>
+    <button class="tip-btn" bindtap="goToProfile">去完善</button>
+  </view>
+</view>

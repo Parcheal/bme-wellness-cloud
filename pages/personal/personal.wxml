@@ -1,0 +1,70 @@
+<!-- pages/personal/personal.wxml -->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-avatar">
+      <text class="avatar-text">{{userProfile.basicInfo.name.charAt(0) || '用'}}</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userProfile.basicInfo.name || '未设置'}}</text>
+      <text class="user-detail" wx:if="{{userProfile}}">
+        {{userProfile.basicInfo.age}}岁 | {{userProfile.basicInfo.gender}}
+      </text>
+      <text class="constitution" wx:if="{{userProfile.constitutionAnalysis}}">
+        体质：{{userProfile.constitutionAnalysis.constitution}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 统计数据 -->
+  <view class="stats-section">
+    <view class="stats-title">我的数据</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-number">{{stats.totalDays}}</text>
+        <text class="stat-label">打卡天数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.totalMeals}}</text>
+        <text class="stat-label">总餐数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.totalMeals > 0 ? Math.round(stats.healthyMeals / stats.totalMeals * 100) : 0}}%</text>
+        <text class="stat-label">健康率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="editProfile">
+      <view class="menu-icon">用户</view>
+      <text class="menu-text">编辑档案</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item" bindtap="viewHistory">
+      <view class="menu-icon">历史</view>
+      <text class="menu-text">历史记录</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item" bindtap="openSettings">
+      <view class="menu-icon">设置</view>
+      <text class="menu-text">设置</text>
+      <text class="menu-arrow">></text>
+    </view>
+    
+    <view class="menu-item logout" bindtap="logout">
+      <view class="menu-icon">退出</view>
+      <text class="menu-text">退出登录</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 体质详情（如果有） -->
+  <view class="constitution-detail" wx:if="{{userProfile.constitutionAnalysis.suggestions}}">
+    <view class="detail-title">体质建议</view>
+    <text class="detail-content">{{userProfile.constitutionAnalysis.suggestions}}</text>
+  </view>
+</view>

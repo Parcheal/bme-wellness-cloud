@@ -1,0 +1,28 @@
+{
+  "name": "bme-wellness-cloud-engine",
+  "version": "1.0.0",
+  "description": "LeanCloud云引擎项目 - BME养生小程序后端",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "leancloud",
+    "cloud-functions",
+    "wellness",
+    "health",
+    "miniprogram"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

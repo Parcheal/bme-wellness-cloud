@@ -1,0 +1,113 @@
+<!-- pages/wellness/wellness.wxml -->
+<view class="container">
+  <!-- 用户体质卡片 -->
+  <view class="constitution-card" wx:if="{{userProfile}}">
+    <view class="card-header">
+      <text class="card-title">您的体质类型</text>
+    </view>
+    <view class="card-content">
+      <view class="constitution-type">
+        {{userProfile.constitutionAnalysis.constitution || '分析中...'}}
+      </view>
+      <view class="constitution-desc" wx:if="{{userProfile.constitutionAnalysis.characteristics}}">
+        {{userProfile.constitutionAnalysis.characteristics}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷问题 -->
+  <view class="quick-questions">
+    <view class="section-title">常见问题</view>
+    <scroll-view class="question-scroll" scroll-x="{{true}}">
+      <view class="question-list">
+        <view class="question-item" data-question="根据我的体质，今天适合吃什么？" bindtap="onQuickQuestion">
+          今日饮食建议
+        </view>
+        <view class="question-item" data-question="我的体质适合什么运动？" bindtap="onQuickQuestion">
+          运动建议
+        </view>
+        <view class="question-item" data-question="根据现在的节气，我应该注意什么？" bindtap="onQuickQuestion">
+          节气养生
+        </view>
+        <view class="question-item" data-question="我最近感觉疲倦，有什么调理方法？" bindtap="onQuickQuestion">
+          疲劳调理
+        </view>
+        <view class="question-item" data-question="有什么适合我体质的茶饮推荐？" bindtap="onQuickQuestion">
+          茶饮推荐
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 对话区域 -->
+  <view class="chat-container">
+    <!-- AI回复区域 -->
+    <view class="reply-section" wx:if="{{reply}}">
+      <view class="reply-header">
+        <image class="ai-avatar" src="/images/ai-doctor.png" mode="aspectFill"/>
+        <text class="reply-label">养生助手</text>
+      </view>
+      <view class="reply-content">
+        <text class="reply-text">{{reply}}</text>
+      </view>
+    </view>
+
+    <!-- 输入区域 -->
+    <view class="input-container">
+      <view class="input-wrapper">
+        <textarea 
+          class="chat-input" 
+          placeholder="请输入您的养生问题，我会根据您的体质给出个性化建议..." 
+          value="{{userInput}}"
+          bindinput="onInput"
+          auto-height
+          maxlength="500"
+          disabled="{{isLoading}}"
+        />
+        <view class="input-actions">
+          <button 
+            class="send-btn" 
+            bindtap="sendMessage"
+            disabled="{{isLoading || !userInput.trim()}}"
+          >
+            {{isLoading ? '分析中...' : '发送'}}
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能按钮区域 -->
+  <view class="function-buttons">
+    <button 
+      class="function-btn upload-btn" 
+      bindtap="uploadWeeklyData"
+      wx:if="{{showUploadButton}}"
+    >
+      <view class="btn-icon">报告</view>
+      <view class="btn-text">
+        <view class="btn-title">生成周报告</view>
+        <view class="btn-subtitle">分析本周饮食情绪数据</view>
+      </view>
+    </button>
+
+    <button 
+      class="function-btn clear-btn" 
+      bindtap="clearChat"
+      wx:if="{{reply}}"
+    >
+      <view class="btn-icon">清空</view>
+      <view class="btn-text">
+        <view class="btn-title">清空对话</view>
+        <view class="btn-subtitle">重新开始咨询</view>
+      </view>
+    </button>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tip-section" wx:if="{{!userProfile}}">
+    <view class="tip-icon">!</view>
+    <view class="tip-text">请先完善个人信息以获得个性化养生建议</view>
+    <button class="tip-btn" bindtap="goToProfileSetup">立即完善</button>
+  </view>
+</view>

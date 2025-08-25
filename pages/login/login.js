@@ -52,8 +52,11 @@ Page({
       });
       
       console.log('登录成功的用户信息:', loginedUser);
-      // 在这里可以写登录成功后的跳转逻辑，比如跳转到应用主页
-      // wx.redirectTo({
+      
+      // 登录成功后跳转到个人信息录入页面
+      wx.redirectTo({
+        url: '/pages/profile-setup/profile-setup'
+      });
 
 
     }).catch(error => {

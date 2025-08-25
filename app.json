@@ -1,12 +1,40 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/login/login",
+    "pages/profile-setup/profile-setup",
+    "pages/home/home",
+    "pages/wellness/wellness",
+    "pages/social/social",
+    "pages/personal/personal"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "中医养生小助手",
     "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#6E0382",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/wellness/wellness",
+        "text": "养生助手"
+      },
+      {
+        "pagePath": "pages/social/social",
+        "text": "养生圈"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的"
+      }
+    ]
   },
   "style": "v2",
   "componentFramework": "glass-easel",

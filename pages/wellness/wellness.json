@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "养生助手",
+  "navigationBarBackgroundColor": "#6E0382",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f8f9fa",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

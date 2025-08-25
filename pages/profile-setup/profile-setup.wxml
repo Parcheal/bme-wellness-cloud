@@ -1,0 +1,277 @@
+<!-- pages/profile-setup/profile-setup.wxml -->
+<view class="container">
+  <!-- 进度指示器 -->
+  <view class="progress-container">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{(currentStep + 1) / 4 * 100}}%"></view>
+    </view>
+    <view class="progress-text">第{{currentStep + 1}}步，共4步</view>
+  </view>
+
+  <!-- 步骤内容 -->
+  <view class="step-container">
+    <!-- 第1步：基本信息 -->
+    <view class="step-content" wx:if="{{currentStep === 0}}">
+      <view class="step-title">基本信息</view>
+        
+        <view class="form-group">
+          <text class="label">姓名 *</text>
+          <input 
+            class="input" 
+            placeholder="请输入您的姓名" 
+            value="{{basicInfo.name}}"
+            data-field="name"
+            bindinput="onBasicInfoInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">年龄 *</text>
+          <input 
+            class="input" 
+            placeholder="请输入年龄" 
+            type="number"
+            value="{{basicInfo.age}}"
+            data-field="age"
+            bindinput="onBasicInfoInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">性别 *</text>
+          <radio-group bindchange="onGenderChange">
+            <label class="radio-item">
+              <radio value="男" checked="{{basicInfo.gender === '男'}}" color="#6E0382"/>
+              <text>男</text>
+            </label>
+            <label class="radio-item">
+              <radio value="女" checked="{{basicInfo.gender === '女'}}" color="#6E0382"/>
+              <text>女</text>
+            </label>
+          </radio-group>
+        </view>
+
+        <view class="form-group">
+          <text class="label">身高 (cm) *</text>
+          <input 
+            class="input" 
+            placeholder="请输入身高" 
+            type="number"
+            value="{{basicInfo.height}}"
+            data-field="height"
+            bindinput="onBasicInfoInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">体重 (kg) *</text>
+          <input 
+            class="input" 
+            placeholder="请输入体重" 
+            type="number"
+            value="{{basicInfo.weight}}"
+            data-field="weight"
+            bindinput="onBasicInfoInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">职业</text>
+          <input 
+            class="input" 
+            placeholder="请输入职业（可选）" 
+            value="{{basicInfo.occupation}}"
+            data-field="occupation"
+            bindinput="onBasicInfoInput"
+          />
+        </view>
+    </view>
+
+    <!-- 第2步：疾病史 -->
+    <view class="step-content" wx:if="{{currentStep === 1}}">
+      <view class="step-title">健康状况</view>
+        
+        <view class="form-group">
+          <text class="label">慢性疾病</text>
+          <textarea 
+            class="textarea" 
+            placeholder="请列出您的慢性疾病（如高血压、糖尿病等），没有请填无" 
+            value="{{medicalHistory.chronicDiseases}}"
+            data-field="chronicDiseases"
+            bindinput="onMedicalHistoryInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">过敏史</text>
+          <textarea 
+            class="textarea" 
+            placeholder="请列出您的过敏史（如花粉、海鲜等），没有请填无" 
+            value="{{medicalHistory.allergies}}"
+            data-field="allergies"
+            bindinput="onMedicalHistoryInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">当前用药</text>
+          <textarea 
+            class="textarea" 
+            placeholder="请列出您当前正在服用的药物，没有请填无" 
+            value="{{medicalHistory.currentMedications}}"
+            data-field="currentMedications"
+            bindinput="onMedicalHistoryInput"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="label">家族病史</text>
+          <textarea 
+            class="textarea" 
+            placeholder="请简述直系亲属的主要疾病史，没有请填无" 
+            value="{{medicalHistory.familyHistory}}"
+            data-field="familyHistory"
+            bindinput="onMedicalHistoryInput"
+          />
+        </view>
+    </view>
+
+    <!-- 第3步：饮食偏好 -->
+    <view class="step-content" wx:if="{{currentStep === 2}}">
+      <view class="step-title">饮食偏好</view>
+        
+        <view class="form-group">
+          <text class="label">辣度偏好：{{dietaryPreferences.spiciness}}/5</text>
+          <slider 
+            class="slider" 
+            min="1" 
+            max="5" 
+            value="{{dietaryPreferences.spiciness}}"
+            data-field="spiciness"
+            bindchange="onPreferenceSliderChange"
+            activeColor="#6E0382"
+            show-value
+          />
+          <view class="slider-desc">1=不吃辣 到 5=很能吃辣</view>
+        </view>
+
+        <view class="form-group">
+          <text class="label">甜度偏好：{{dietaryPreferences.sweetness}}/5</text>
+          <slider 
+            class="slider" 
+            min="1" 
+            max="5" 
+            value="{{dietaryPreferences.sweetness}}"
+            data-field="sweetness"
+            bindchange="onPreferenceSliderChange"
+            activeColor="#6E0382"
+            show-value
+          />
+          <view class="slider-desc">1=不爱甜食 到 5=很爱甜食</view>
+        </view>
+
+        <view class="form-group">
+          <text class="label">饮食温度偏好</text>
+          <radio-group bindchange="onTemperatureChange">
+            <label class="radio-item">
+              <radio value="cold" checked="{{dietaryPreferences.temperature === 'cold'}}" color="#6E0382"/>
+              <text>偏爱冷食</text>
+            </label>
+            <label class="radio-item">
+              <radio value="normal" checked="{{dietaryPreferences.temperature === 'normal'}}" color="#6E0382"/>
+              <text>常温即可</text>
+            </label>
+            <label class="radio-item">
+              <radio value="hot" checked="{{dietaryPreferences.temperature === 'hot'}}" color="#6E0382"/>
+              <text>偏爱热食</text>
+            </label>
+          </radio-group>
+        </view>
+
+        <view class="form-group">
+          <text class="label">荤素偏好</text>
+          <radio-group bindchange="onMeatPreferenceChange">
+            <label class="radio-item">
+              <radio value="vegetarian" checked="{{dietaryPreferences.meatPreference === 'vegetarian'}}" color="#6E0382"/>
+              <text>素食主义</text>
+            </label>
+            <label class="radio-item">
+              <radio value="mixed" checked="{{dietaryPreferences.meatPreference === 'mixed'}}" color="#6E0382"/>
+              <text>荤素搭配</text>
+            </label>
+            <label class="radio-item">
+              <radio value="meat" checked="{{dietaryPreferences.meatPreference === 'meat'}}" color="#6E0382"/>
+              <text>偏爱肉食</text>
+            </label>
+          </radio-group>
+        </view>
+
+        <view class="form-group">
+          <text class="label">用餐时间</text>
+          <view class="time-group">
+            <view class="time-item">
+              <text>早餐：</text>
+              <picker mode="time" value="{{dietaryPreferences.eatingTime.breakfast}}" data-meal="breakfast" bindchange="onEatingTimeChange">
+                <view class="time-picker">{{dietaryPreferences.eatingTime.breakfast}}</view>
+              </picker>
+            </view>
+            <view class="time-item">
+              <text>午餐：</text>
+              <picker mode="time" value="{{dietaryPreferences.eatingTime.lunch}}" data-meal="lunch" bindchange="onEatingTimeChange">
+                <view class="time-picker">{{dietaryPreferences.eatingTime.lunch}}</view>
+              </picker>
+            </view>
+            <view class="time-item">
+              <text>晚餐：</text>
+              <picker mode="time" value="{{dietaryPreferences.eatingTime.dinner}}" data-meal="dinner" bindchange="onEatingTimeChange">
+                <view class="time-picker">{{dietaryPreferences.eatingTime.dinner}}</view>
+              </picker>
+            </view>
+          </view>
+        </view>
+    </view>
+
+    <!-- 第4步：中医体质测试 -->
+    <view class="step-content" wx:if="{{currentStep === 3}}">
+      <view class="step-title">中医体质测试</view>
+        <view class="step-desc">请根据您的实际情况选择最符合的答案</view>
+        
+        <view class="question-list">
+          <view class="question-item" wx:for="{{constitutionQuestions}}" wx:key="id">
+            <view class="question-text">{{index + 1}}. {{item.question}}</view>
+            <radio-group data-question-id="{{item.id}}" bindchange="onConstitutionAnswer">
+              <label class="option-item" wx:for="{{item.options}}" wx:for-item="option" wx:for-index="optionIndex" wx:key="optionIndex">
+                <radio value="{{optionIndex}}" checked="{{constitutionTest.answers[item.id] == optionIndex}}" color="#6E0382"/>
+                <text class="option-text">{{option}}</text>
+              </label>
+            </radio-group>
+          </view>
+        </view>
+    </view>
+  </view>
+
+  <!-- 测试区域 -->
+  <view class="test-section" wx:if="{{currentStep === 0}}">
+    <view class="test-title">🧪 测试功能</view>
+    <button class="test-btn" bindtap="fillTestData">填充测试数据</button>
+    <text class="test-desc">快速填入测试数据，方便测试功能</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="button-group">
+    <button 
+      class="btn btn-secondary" 
+      wx:if="{{currentStep > 0}}" 
+      bindtap="prevStep"
+    >
+      上一步
+    </button>
+    
+    <button 
+      class="btn btn-primary" 
+      bindtap="nextStep"
+    >
+      {{currentStep < 3 ? '下一步' : '完成并分析体质'}}
+    </button>
+  </view>
+</view>
