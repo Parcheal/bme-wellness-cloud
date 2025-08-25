@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "leanengine": "^4.0.0",
+    "leanengine": "^3.8.0",
     "leancloud-storage": "^4.15.0",
     "node-fetch": "^2.6.7"
   },
