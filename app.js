@@ -47,8 +47,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// 云函数调用接口
-app.post('/1.1/functions/:name', AV.Cloud.httpHandler);
+// 云函数已通过 AV.express() 中间件自动处理
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
