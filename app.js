@@ -4,13 +4,16 @@
  */
 
 const AV = require('./libs/av-core-min.js');
-require('./libs/leancloud-adapters-weapp.js');
+const adapters = require('./libs/leancloud-adapters-weapp.js');
+
+// 配置存储适配器
+AV.setAdapters(adapters);
 
 // LeanCloud 初始化
 AV.init({
-  appId: 'XXX', // 请在这里填入您的 AppId
-  appKey: 'XXX', // 请在这里填入您的 AppKey
-  serverURL: 'https://xxx.xxx.com' // 请在这里填入您的服务器地址
+  appId: '4SGiOp4IDsqsMTbGMOH3wE73-gzGzoHsz', // 您的 LeanCloud AppId
+  appKey: 'E95Rot9tRquVLS3Td6LQIqgI', // 您的 LeanCloud AppKey
+  serverURL: 'https://4sgiop4i.lc-cn-n1-shared.com' // 您的服务器地址
 });
 
 // 全局 App
