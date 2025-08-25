@@ -1,138 +1,74 @@
-// app.js
-// 引入 LeanCloud SDK
-const AV = require('./libs/av-core-min.js');
-const adapters = require('./libs/leancloud-adapters-weapp.js');
+/**
+ * LeanCloud 云引擎启动文件
+ * BME 养生小程序后端
+ */
 
-// 设置适配器
-AV.setAdapters(adapters);
+const express = require('express');
+const AV = require('leanengine');
 
-// 初始化 LeanCloud
+// 初始化LeanEngine
 AV.init({
-  appId: '4SGiOp4IDsqsMTbGMOH3wE73-gzGzoHsz',
-  appKey: 'E95Rot9tRquVLS3Td6LQIqgI',
-  serverURL: 'https://4sgiop4i.lc-cn-n1-shared.com'
+  appId: process.env.LEANCLOUD_APP_ID,
+  appKey: process.env.LEANCLOUD_APP_KEY,
+  masterKey: process.env.LEANCLOUD_APP_MASTER_KEY
 });
 
-// 将 AV 对象挂载到全局，方便各页面使用
-global.AV = AV;
+// 引入云函数定义
+require('./cloud/main');
 
-App({
-  onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+// 创建Express应用
+const app = express();
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+// 使用LeanEngine中间件
+app.use(AV.express());
 
-    // 初始化推送通知
-    this.initPushNotification();
-  },
+// 解析JSON请求体
+app.use(express.json());
 
-  // 初始化推送通知
-  initPushNotification() {
-    // 获取推送授权
-    wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.notify']) {
-          // 已经授权，可以直接调用推送相关API
-          console.log('推送通知已授权');
-          this.setupPushHandlers();
-        } else {
-          // 没有授权，引导用户开启
-          console.log('推送通知未授权，需要引导用户开启');
-        }
-      }
-    });
-  },
+// 健康检查接口
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'BME养生小程序云引擎运行中',
+    timestamp: new Date().toISOString(),
+    functions: [
+      'wellnessAI',
+      'analyzeMealImage', 
+      'analyzeConstitution',
+      'dailyWellnessPush',
+      'sendTestPush',
+      'generateHealthReport',
+      'shareWellnessPost',
+      'getWellnessFeed',
+      'likeWellnessPost',
+      'saveMealRecord',
+      'getMealRecords'
+    ]
+  });
+});
 
-  // 设置推送消息处理
-  setupPushHandlers() {
-    // 监听推送消息
-    wx.onPushMessage((res) => {
-      console.log('收到推送消息:', res);
-      
-      // 处理养生提醒推送
-      if (res.data && res.data.type === 'daily_wellness') {
-        this.handleWellnessPush(res.data);
-      }
-    });
-  },
+// 云函数调用接口
+app.post('/1.1/functions/:name', AV.Cloud.httpHandler);
 
-  // 处理养生提醒推送
-  handleWellnessPush(data) {
-    console.log('处理养生提醒:', data);
-    
-    // 保存推送内容到本地存储
-    const pushHistory = wx.getStorageSync('wellness_push_history') || [];
-    pushHistory.unshift({
-      ...data,
-      receivedAt: new Date().toISOString(),
-      read: false
-    });
-    
-    // 只保留最近30天的推送记录
-    if (pushHistory.length > 30) {
-      pushHistory.splice(30);
-    }
-    
-    wx.setStorageSync('wellness_push_history', pushHistory);
-    
-    // 如果用户正在使用应用，显示提示
-    if (getCurrentPages().length > 0) {
-      wx.showToast({
-        title: '收到养生提醒',
-        icon: 'none',
-        duration: 2000
-      });
-    }
-  },
+// 错误处理中间件
+app.use((err, req, res, next) => {
+  console.error('未处理的错误:', err);
+  res.status(500).json({
+    error: '服务器内部错误'
+  });
+});
 
-  // 申请推送权限
-  requestPushPermission() {
-    return new Promise((resolve, reject) => {
-      wx.authorize({
-        scope: 'scope.notify',
-        success: () => {
-          console.log('推送权限授权成功');
-          this.setupPushHandlers();
-          resolve(true);
-        },
-        fail: () => {
-          console.log('推送权限授权失败');
-          // 引导用户到设置页面
-          wx.showModal({
-            title: '开启推送通知',
-            content: '开启推送通知，每天接收个性化养生提醒',
-            confirmText: '去设置',
-            success: (res) => {
-              if (res.confirm) {
-                wx.openSetting({
-                  success: (settingRes) => {
-                    if (settingRes.authSetting['scope.notify']) {
-                      this.setupPushHandlers();
-                      resolve(true);
-                    } else {
-                      reject(false);
-                    }
-                  }
-                });
-              } else {
-                reject(false);
-              }
-            }
-          });
-        }
-      });
-    });
-  },
-
-  globalData: {
-    userInfo: null
+// 启动云引擎
+const PORT = process.env.LEANCLOUD_APP_PORT || process.env.PORT || 3000;
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error('云引擎启动失败:', err);
+  } else {
+    console.log('🚀 BME养生小程序云引擎已启动');
+    console.log(`📡 服务地址: ${PORT}`);
+    console.log(`📅 启动时间: ${new Date().toLocaleString('zh-CN')}`);
+    console.log('✅ 11个云函数已加载');
   }
-})
+});
+
+module.exports = app;
