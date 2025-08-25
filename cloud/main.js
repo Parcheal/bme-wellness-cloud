@@ -1,7 +1,9 @@
 /**
- * LeanCloud 云引擎入口文件
+ * LeanCloud 云引擎云函数定义文件
  * 包含所有云函数定义
  */
+
+const AV = require('leanengine');
 
 // ==================== saveMealRecord 云函数 ====================
 /**
@@ -1499,4 +1501,4 @@ async function updateUserSocialStats(userProfile, statType, increment) {
   }
 }
 
-module.exports = AV.Cloud;
+// 云函数定义完成

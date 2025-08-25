@@ -38,7 +38,7 @@ git add .
 git commit -m "部署养生小程序云函数"
 
 # 关联远程仓库（替换为您的仓库地址）
-git remote add origin https://github.com/your-username/bme-wellness-cloud.git
+git remote add origin https://github.com/Parcheal/bme-wellness-cloud.git
 
 # 推送到 GitHub
 git push -u origin main
