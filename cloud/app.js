@@ -3,6 +3,7 @@
  * BME 养生小程序后端
  */
 
+const express = require('express');
 const AV = require('leanengine');
 
 // 初始化LeanEngine
@@ -16,10 +17,13 @@ AV.init({
 require('./main');
 
 // 创建Express应用
-const app = require('express')();
+const app = express();
 
 // 使用LeanEngine中间件
 app.use(AV.express());
+
+// 解析JSON请求体
+app.use(express.json());
 
 // 健康检查接口
 app.get('/', (req, res) => {
@@ -40,6 +44,17 @@ app.get('/', (req, res) => {
       'saveMealRecord',
       'getMealRecords'
     ]
+  });
+});
+
+// 云函数调用接口
+app.post('/1.1/functions/:name', AV.Cloud.httpHandler);
+
+// 错误处理中间件
+app.use((err, req, res, next) => {
+  console.error('未处理的错误:', err);
+  res.status(500).json({
+    error: '服务器内部错误'
   });
 });
 
