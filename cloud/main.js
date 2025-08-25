@@ -1356,8 +1356,18 @@ AV.Cloud.define('getWellnessFeed', async (request) => {
       query.matchesQuery('authorProfile', profileQuery);
     }
     
-    // 执行查询
-    const posts = await query.find();
+    // 执行查询，处理类不存在的情况
+    let posts = [];
+    try {
+      posts = await query.find();
+    } catch (error) {
+      // 如果WellnessPost类还不存在，返回空数组
+      if (error.message && error.message.includes('Class or object doesn\'t exists')) {
+        posts = [];
+      } else {
+        throw error;
+      }
+    }
     
     // 格式化返回数据
     const formattedPosts = await Promise.all(posts.map(async (post) => {
@@ -1433,7 +1443,19 @@ AV.Cloud.define('likeWellnessPost', async (request) => {
     const likeQuery = new AV.Query(LikeRecord);
     likeQuery.equalTo('userId', userId);
     likeQuery.equalTo('postId', postId);
-    const existingLike = await likeQuery.first();
+    
+    // 查询现有点赞记录，处理类不存在的情况
+    let existingLike = null;
+    try {
+      existingLike = await likeQuery.first();
+    } catch (error) {
+      // 如果LikeRecord类还不存在，则视为没有点赞记录
+      if (error.message && error.message.includes('Class or object doesn\'t exists')) {
+        existingLike = null;
+      } else {
+        throw error;
+      }
+    }
     
     const WellnessPost = AV.Object.extend('WellnessPost');
     const post = await new AV.Query(WellnessPost).get(postId);

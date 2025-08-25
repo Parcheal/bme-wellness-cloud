@@ -72,7 +72,19 @@ Page({
       const currentUser = AV.User.current();
       const query = new AV.Query('DailyRecord');
       query.equalTo('userId', currentUser.id);
-      const records = await query.find();
+      
+      // 查询记录，处理类不存在的情况
+      let records = [];
+      try {
+        records = await query.find();
+      } catch (error) {
+        // 如果DailyRecord类还不存在，返回空数组
+        if (error.message && error.message.includes('Class or object doesn\'t exists')) {
+          records = [];
+        } else {
+          throw error;
+        }
+      }
       
       let healthyMeals = 0;
       let totalMeals = 0;

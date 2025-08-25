@@ -37,7 +37,7 @@ Page({
       }
 
       const query = new AV.Query('UserProfile');
-      query.equalTo('userId', currentUser.id);
+      query.equalTo('user', currentUser);
       const profile = await query.first();
       
       if (profile) {
