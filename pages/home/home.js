@@ -117,7 +117,12 @@ Page({
         this.updateWeekDisplay();
       }
     } catch (error) {
-      console.error('加载今日数据失败:', error);
+      // DailyRecord 类可能还不存在，这是正常的
+      if (error.message && error.message.includes('Class or object doesn\'t exists')) {
+        console.log('DailyRecord 类暂未创建，将在首次使用时自动创建');
+      } else {
+        console.error('加载今日数据失败:', error);
+      }
     }
   },
 

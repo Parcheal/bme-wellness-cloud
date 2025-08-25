@@ -60,7 +60,7 @@ AV.Cloud.define('saveMealRecord', async (request) => {
     
     // 设置字段值
     mealRecord.set('userProfile', userProfile);
-    mealRecord.set('mealImage', mealImage.trim());
+    mealRecord.set('mealImageUrl', mealImage.trim()); // 保存图片URL字符串
     mealRecord.set('mealTime', mealTimeDate);
     mealRecord.set('mealText', mealText.trim());
     mealRecord.set('emotion', emotion.trim());
@@ -128,7 +128,7 @@ AV.Cloud.define('getMealRecords', async (request) => {
       
       return {
         mealRecordId: recordData.objectId,
-        mealImage: recordData.mealImage,
+        mealImageUrl: recordData.mealImageUrl,
         mealTime: recordData.mealTime,
         mealText: recordData.mealText,
         emotion: recordData.emotion,
